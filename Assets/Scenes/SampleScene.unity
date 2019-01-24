@@ -633,7 +633,7 @@ MonoBehaviour:
   _Use_Custom_Name: 0
   _motion_value_space:
     _Decimal_Granularity: 0
-    _Min_Value: 0
+    _Min_Value: -1
     _Max_Value: 30
   _energy_spend_since_reset: 0
   _energy_cost: 0
@@ -664,7 +664,7 @@ MonoBehaviour:
     m_Extent: {x: 0, y: 0, z: 0}
   _draw_bounds: 0
   _is_alive: 1
---- !u!114 &6476460559300653911
+--- !u!114 &6476460559300653912
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -674,7 +674,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_GeneratorAsset: {fileID: 0}
-  m_Script: {fileID: 11500000, guid: f8d81f9004e53acfda8f0dff19d803e6, type: 3}
+  m_Script: {fileID: 11500000, guid: 796c0cdb5c39f47c2948f0251ae0c441, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _Custom_Name: 
@@ -683,12 +683,10 @@ MonoBehaviour:
   _editor_reregistering: 1
   _Use_Custom_Name: 0
   _normalise_observation: 0
-  _observation_value: 0
-  _observation_value_space:
-    _Decimal_Granularity: 0
-    _Min_Value: 0
-    _Max_Value: 0
-  _dim: 5
+  _position: {x: 0, y: 0, z: 0}
+  _rotation: {x: 0, y: 0, z: 0.008726535, w: 0.9999619}
+  _space: 0
+  _use_environments_coordinates: 1
 --- !u!1001 &8274818356822276117
 PrefabInstance:
   m_ObjectHideFlags: 0
