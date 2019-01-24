@@ -1,9 +1,10 @@
-﻿using System.Collections;
+﻿using droid.Runtime.Prototyping.Internals;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Random = System.Random;
 
-public class Obstacle : MonoBehaviour
+public class Obstacle : Resetable
 {
     public ObstacleCube[] cubes;
     public bool[] wallsEnabled;
@@ -14,16 +15,36 @@ public class Obstacle : MonoBehaviour
     Random rand;
     GameManager gameManager;
     private bool reset = false;
+    
+    public override string PrototypingTypeName => "Obstacle";
 
-    private void Start()
+    Vector3[] positions;
+    float[] scale;
+
+
+    private new void Start()
     {
+        base.Start();
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         cubes = transform.GetComponentsInChildren<ObstacleCube>();
+
+        positions = new Vector3[cubes.Length];
+        scale = new float[cubes.Length];
+        for (int i = 0; i < cubes.Length; i++)
+        {
+            positions[i] = cubes[i].transform.position;
+            scale[i] = cubes[i].transform.localScale.x;
+        }
 
         playerPos = new Vector3(0, 0, 0);
         wallsEnabled = new bool[4];
         ResetBools();
         DisableRandomWall();
+    }
+
+    protected override void Setup()
+    {
+        
     }
 
     private void Update()
@@ -72,5 +93,15 @@ public class Obstacle : MonoBehaviour
         int wallToDisable = rand.Next(cubes.Length);
         cubes[wallToDisable].DisableWall();
         wallsEnabled[wallToDisable] = false;
+    }
+
+    public override void EnvironmentReset()
+    {
+        Debug.Log("WHAT");
+        for (int i = 0; i < cubes.Length; i++)
+        {
+            cubes[i].transform.position = positions[i];
+            cubes[i].transform.localScale = new Vector3(scale[i], 1, 1);
+        }
     }
 }
