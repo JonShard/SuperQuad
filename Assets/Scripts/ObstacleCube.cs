@@ -34,11 +34,8 @@ public class ObstacleCube : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("Collided with " + collision.gameObject.name);
-        //Debug.Log("GameObject layer: " + collision.gameObject.layer + " center layer: " + obstacle.centerLayer.value);
         if (collision.gameObject.layer == obstacle.centerLayer)
         {
-            Debug.Log("Hit center");
             obstacle.ResetObstacles();
         }
     }

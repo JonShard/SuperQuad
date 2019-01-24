@@ -18,8 +18,6 @@ public class Obstacle : MonoBehaviour
     private void Start()
     {
         rand = new Random((int)(Time.realtimeSinceStartup * 10.0f));
-        colliders = GetComponentsInChildren<Collider2D>();
-        //colliders[Random.Range(0, colliders.Length)].isTrigger = true;
         playerPos = new Vector3(0, 0, 0);
         wallsEnabled = new bool[4];
         ResetBools();
@@ -33,21 +31,10 @@ public class Obstacle : MonoBehaviour
         {
             Vector3 direction = (playerPos - cube.transform.position).normalized;
             cube.transform.position += direction * speed * Time.deltaTime;
-            //cube.rb.MovePosition(cube.transform.position + direction * speed * Time.deltaTime);
 
             cube.transform.localScale = new Vector3(cube.transform.localScale.x - speed * 2 * Time.deltaTime,
                                                     cube.transform.localScale.y,
                                                     cube.transform.localScale.z);
-            /*Collider[] collisions = Physics.OverlapBox(cube.transform.position, new Vector3(cube.transform.localScale.x / 2,
-                                                                                            cube.transform.localScale.y / 2,
-                                                                                            cube.transform.localScale.z / 2));
-            foreach(Collider collision in collisions)
-            {
-                if(collision.gameObject.layer == centerLayer)
-                {
-                    ResetObstacle();
-                }
-            }*/
         }
     }
 
