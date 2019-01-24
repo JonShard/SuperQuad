@@ -4,16 +4,13 @@ using UnityEngine;
 
 public class Obstacle : MonoBehaviour
 {
+    Collider2D[] colliders;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
+        colliders = GetComponentsInChildren<Collider2D>();
+        //colliders[Random.Range(0, colliders.Length)].isTrigger = true;
         
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
