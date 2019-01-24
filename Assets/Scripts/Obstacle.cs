@@ -5,7 +5,6 @@ using Random = System.Random;
 
 public class Obstacle : MonoBehaviour
 {
-    Collider2D[] colliders;
     public ObstacleCube[] cubes;
     public bool[] wallsEnabled;
     [SerializeField] Vector3 playerPos;
@@ -44,6 +43,7 @@ public class Obstacle : MonoBehaviour
         {
             cube.ResetObstacle();
         }
+        ResetBools();
         DisableRandomWall();
     }
 
