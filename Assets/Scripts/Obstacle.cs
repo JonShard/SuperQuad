@@ -1,34 +1,78 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = System.Random;
 
 public class Obstacle : MonoBehaviour
 {
     Collider2D[] colliders;
-    public GameObject[] cubes;
-    public float speed;
+    public ObstacleCube[] cubes;
+    public bool[] wallsEnabled;
     [SerializeField] Vector3 playerPos;
+    public int playerLayer;
+    public int centerLayer;
+    public float speed;
+    Random rand;
+
 
     private void Start()
     {
+        rand = new Random((int)(Time.realtimeSinceStartup * 10.0f));
         colliders = GetComponentsInChildren<Collider2D>();
         //colliders[Random.Range(0, colliders.Length)].isTrigger = true;
         playerPos = new Vector3(0, 0, 0);
-
-
+        wallsEnabled = new bool[4];
+        ResetBools();
+        DisableRandomWall();
     }
 
     private void Update()
     {
         Vector3 scale = new Vector3(-speed * Time.deltaTime, -speed * Time.deltaTime, -speed * Time.deltaTime);
-        foreach(GameObject cube in cubes)
+        foreach(ObstacleCube cube in cubes)
         {
             Vector3 direction = (playerPos - cube.transform.position).normalized;
             cube.transform.position += direction * speed * Time.deltaTime;
+            //cube.rb.MovePosition(cube.transform.position + direction * speed * Time.deltaTime);
 
             cube.transform.localScale = new Vector3(cube.transform.localScale.x - speed * 2 * Time.deltaTime,
                                                     cube.transform.localScale.y,
                                                     cube.transform.localScale.z);
+            /*Collider[] collisions = Physics.OverlapBox(cube.transform.position, new Vector3(cube.transform.localScale.x / 2,
+                                                                                            cube.transform.localScale.y / 2,
+                                                                                            cube.transform.localScale.z / 2));
+            foreach(Collider collision in collisions)
+            {
+                if(collision.gameObject.layer == centerLayer)
+                {
+                    ResetObstacle();
+                }
+            }*/
         }
+    }
+
+    public void ResetObstacles()
+    {
+        foreach(ObstacleCube cube in cubes)
+        {
+            cube.ResetObstacle();
+        }
+        DisableRandomWall();
+    }
+
+    public void ResetBools()
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            wallsEnabled[i] = true;
+        }
+    }
+
+    public void DisableRandomWall()
+    {
+        rand = new Random((int)(Time.realtimeSinceStartup * 10.0f));
+        int wallToDisable = rand.Next(cubes.Length);
+        cubes[wallToDisable].DisableWall();
+        wallsEnabled[wallToDisable] = false;
     }
 }
