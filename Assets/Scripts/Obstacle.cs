@@ -89,7 +89,7 @@ public class Obstacle : Resetable
 
     public void DisableRandomWall()
     {
-        rand = new Random((int)(Time.realtimeSinceStartup * 10.0f + gameObject.GetInstanceID()));
+        rand = new Random((int)(System.DateTime.Now.Millisecond + gameObject.GetInstanceID()));
         int wallToDisable = rand.Next(cubes.Length);
         cubes[wallToDisable].DisableWall();
         wallsEnabled[wallToDisable] = false;
@@ -103,5 +103,13 @@ public class Obstacle : Resetable
             cubes[i].transform.position = positions[i];
             cubes[i].transform.localScale = new Vector3(scale[i], 1, 1);
         }
+        foreach (ObstacleCube cube in cubes)
+        {
+            cube.meshRenderer.enabled = true;
+            //cube.coll.isTrigger = true;
+        }
+        ResetBools();
+        DisableRandomWall();
+        gameManager.RegisterResetWall(wallsEnabled);
     }
 }

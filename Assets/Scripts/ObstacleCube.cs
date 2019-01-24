@@ -28,7 +28,7 @@ public class ObstacleCube : MonoBehaviour
 
     public void DisableWall()
     {
-        coll.isTrigger = false;
+        //coll.isTrigger = false;
         meshRenderer.enabled = false;
     }
 
