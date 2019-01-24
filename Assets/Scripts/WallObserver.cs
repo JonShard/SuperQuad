@@ -14,7 +14,12 @@ namespace droid.Runtime.Prototyping.Observers
 
         public List<float> wallStates = new List<float>();
         public float[] ObservationArray => wallStates.ToArray();
-        public override void UpdateObservation() {  }
+        public override void UpdateObservation() { FloatEnumerable = wallStates; }
+        //public override IEnumerable<float> FloatEnumerable()
+        //{
+        //    return wallStates;
+        //}
+
 
     }
 }
