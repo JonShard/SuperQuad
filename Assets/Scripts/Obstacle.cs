@@ -12,11 +12,14 @@ public class Obstacle : MonoBehaviour
     public int centerLayer;
     public float speed;
     Random rand;
-
+    GameManager gameManager;
+    private bool reset = false;
 
     private void Start()
     {
-        rand = new Random((int)(Time.realtimeSinceStartup * 10.0f));
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        cubes = transform.GetComponentsInChildren<ObstacleCube>();
+
         playerPos = new Vector3(0, 0, 0);
         wallsEnabled = new bool[4];
         ResetBools();
@@ -35,16 +38,24 @@ public class Obstacle : MonoBehaviour
                                                     cube.transform.localScale.y,
                                                     cube.transform.localScale.z);
         }
+
+        if (reset)
+        {
+            foreach (ObstacleCube cube in cubes)
+            {
+                cube.ResetObstacle();
+            }
+            ResetBools();
+            DisableRandomWall();
+            gameManager.RegisterResetWall(wallsEnabled);
+            reset = false;
+        }
+
     }
 
     public void ResetObstacles()
     {
-        foreach(ObstacleCube cube in cubes)
-        {
-            cube.ResetObstacle();
-        }
-        ResetBools();
-        DisableRandomWall();
+        reset = true;
     }
 
     public void ResetBools()
@@ -57,7 +68,7 @@ public class Obstacle : MonoBehaviour
 
     public void DisableRandomWall()
     {
-        rand = new Random((int)(Time.realtimeSinceStartup * 10.0f));
+        rand = new Random((int)(Time.realtimeSinceStartup * 10.0f + gameObject.GetInstanceID()));
         int wallToDisable = rand.Next(cubes.Length);
         cubes[wallToDisable].DisableWall();
         wallsEnabled[wallToDisable] = false;
